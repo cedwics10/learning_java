@@ -3,8 +3,8 @@ package hello;
 public class test {
 
 	public static void main(String[] args) {
-		HelloWorldBuilder myBuilder = new HelloWorldBuilder().
-				setId(10).setName("Mickey");
+		HelloWorldBuilder myBuilder = new HelloWorldBuilder().setName("Mickey")
+				.setAge(20);
 		
 		HelloWorld myHelloWorld = myBuilder.makeClass();
 		myHelloWorld.checkNumberExists();

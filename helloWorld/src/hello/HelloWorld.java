@@ -1,55 +1,46 @@
 package hello;
 
 public class HelloWorld {
-	boolean isStringNotEmpty, isHelloNumberPositive, helloNumberNotExists;
+	private boolean isStringNotEmpty, isHelloNumberPositive, helloNumberNotExists;
 
-	int intIndividualId;
+	private int intAge;
 
-	String stringDefault, stringHello, stringHelloNumber;
+	private String stringDefault, stringFirstname, stringHelloNumber;
 
-	boolean HelloNumberNotExists;
-	
-	public HelloWorld(String personalMessage) {
-		
-		this.HelloNumberNotExists = false; // Artificial condition
-		this.stringDefault = "Hello World !";
-		
-		this.intIndividualId = 10;
+	private boolean ageDoesNotExists;
 
-		this.stringHello = "Tu es le numéro : " + this.intIndividualId;
-
+	public HelloWorld(String individualName) {
+		this.stringFirstname = individualName;
+		this.intAge = -1;
 	}
-	
 
-	public HelloWorld(String personalMessage, int idIndividual) {
+	public HelloWorld(String individualName, int ageIndividual) {
+		this.stringFirstname = individualName;
 		
-		this.HelloNumberNotExists = idIndividual == 0; // Artificial condition
-		this.stringDefault = "Hello World !";
-		
-		this.intIndividualId = idIndividual;
-
-		this.stringHello = "Tu es le numéro : " + this.intIndividualId;
+		this.ageDoesNotExists = ageIndividual == 0; // Artificial condition
+		this.intAge = ageIndividual;
 
 	}
 
 	public void checkNumberExists() {
-		if (this.HelloNumberNotExists) {
-			System.out.print("Tu n'as pas de numéro : aurevoir.");
+		if (this.ageDoesNotExists) {
+			System.out.print("Vous n'avez pas indiqué votre âge : aurevoir.");
 			System.exit(0);
 		} else
 			System.out.println("La classe Hello World est intanciée !\n");
 	}
 
 	public String printHelloMessage() {
-		this.isStringNotEmpty = !this.stringHello.isEmpty();
-		this.isHelloNumberPositive = this.intIndividualId >= 0;
+		this.isStringNotEmpty = !this.stringFirstname.isEmpty();
+		this.isHelloNumberPositive = this.intAge >= 0;
 		this.helloNumberNotExists = false;
 
-		if (this.isStringNotEmpty)
-			return this.stringDefault + " " + this.stringHello + " , " + this.stringHelloNumber;
-		else if (this.isHelloNumberPositive)
-			return "Le texte spécifié est vide. " + this.stringHelloNumber;
+
+		if (this.isHelloNumberPositive)
+			return "Hello "  + this.stringFirstname + ". Tu as " + this.intAge + " ans.";
+		else if (this.isStringNotEmpty)
+			return "Hello "  + this.stringFirstname + ". Je ne connais pas ton âge.";
 		else
-			return this.stringDefault + " Le texte spécifié est vide. Pas de nombre.";
+			return "Hello World !";
 	}
 }
