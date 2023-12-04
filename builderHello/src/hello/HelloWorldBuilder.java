@@ -5,13 +5,9 @@ public class HelloWorldBuilder {
 	private String name;
 	private int age;
 	
-	HelloWorldBuilder()
-	{
-		//  System.out.print("" + this.id);
-	}
-	
 	HelloWorldBuilder setName(String Name)
 	{
+		this.age = -2;
 		this.name = Name;
 		return this;
 	}
