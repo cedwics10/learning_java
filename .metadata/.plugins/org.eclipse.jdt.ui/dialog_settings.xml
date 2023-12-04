@@ -3,7 +3,7 @@
 	<item key="org.eclipse.jdt.ui.last.selected.jre.kind2" value="1"/>
 	<item key="org.eclipse.jdt.ui.last.selected.execution.enviroment" value="JavaSE-19"/>
 	<item key="org.eclipse.jdt.ui.last.external.project" value="C:\Users\cedri\OneDrive\Développement Web\Portfolio\Java\test"/>
-	<item key="org.eclipse.jdt.ui.last.selected.project.jre" value="jre"/>
+	<item key="org.eclipse.jdt.ui.last.selected.project.jre" value="jdk-21"/>
 	<item key="filters_last_used" value="filter_imports;"/>
 	<section name="completion_proposal_size">
 	</section>
@@ -58,5 +58,12 @@
 		<item key="expanded6" value="false"/>
 		<item key="expanded7" value="false"/>
 		<item key="expanded8" value="false"/>
+	</section>
+	<section name="org.eclipse.jdt.internal.ui.text.QuickOutline">
+		<item key="GoIntoTopLevelTypeAction.isChecked" value="false"/>
+		<item key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_WIDTH" value="650"/>
+		<item key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_HEIGHT" value="560"/>
+		<item key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_USE_PERSISTED_SIZE" value="true"/>
+		<item key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_USE_PERSISTED_LOCATION" value="false"/>
 	</section>
 </section>

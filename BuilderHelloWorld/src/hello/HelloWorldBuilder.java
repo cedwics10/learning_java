@@ -18,7 +18,7 @@ public class HelloWorldBuilder {
 		return this;
 	}
 
-	HelloWorld makeClass()
+	HelloWorld makeObject()
 	{
 		if(this.name != null && this.age != 0)
 			return new HelloWorld(this.name, this.age);
