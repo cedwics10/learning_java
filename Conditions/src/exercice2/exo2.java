@@ -9,7 +9,7 @@ public class exo {
 		int carre;
 		System.out.println("Entrez n'importe quel nombre ");
 		nombre = clavier.nextInt();
-		carre = nombre * nombre;
+		carre = (int) Math.pow(nombre,  2);
 		System.out.println("Le carré du nombr eest : " + carre);
 	}
 }
