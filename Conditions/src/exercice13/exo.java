@@ -26,7 +26,7 @@ public class exo {
 		finalMinute = String.format("%02d", min);
 
 		
-		System.out.print("L'heure à la minute suivante sera : " + finalHour + ":" + finalMinute);
+		System.out.print("Dans une minute, il sera : " + finalHour + ":" + finalMinute);
 	}
 
 }
