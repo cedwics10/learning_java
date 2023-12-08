@@ -7,13 +7,17 @@ public class HelloWorldBuilder {
 	
 	HelloWorldBuilder setName(String Name)
 	{
-		this.age = -2;
 		this.name = Name;
 		return this;
 	}
 	
 	HelloWorldBuilder setAge(int age)
 	{
+		if(age < 0)
+		{
+			System.out.println("Âge est invalide.");
+			System.exit(0);
+		}
 		this.age = age;
 		return this;
 	}
