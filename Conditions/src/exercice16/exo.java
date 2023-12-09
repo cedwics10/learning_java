@@ -21,7 +21,7 @@ public class exo {
 		
 		boolean womanLiableForTaxes = genre.equals("f") && age >= MIN_AGE_TAXES_W
 				&& age <= MAX_AGE_TAXES_W;
-		boolean ManLiableForTaxes =  genre.equals("h") && age > MIN_AGE_TAXES_M;
+		boolean ManLiableForTaxes =  genre.equals("h") && age >= MIN_AGE_TAXES_M;
 		
 		textTaxes = (womanLiableForTaxes || ManLiableForTaxes) ? 
 				"Vous êtes imposable." : "Vous n'êtes pas imposable.";

@@ -31,12 +31,9 @@ public class exo {
 		nextMinute = minute % 60;
 		nextHour = hour % 24;
 		
-		finalSecond = (nextSecond < 10) ? String.format("%02d", nextSecond) 
-				: Integer.toString(nextSecond);
-		finalMinute = (nextMinute < 10) ?  String.format("%02d", nextMinute) 
-				: Integer.toString(nextMinute);
-		finalHour =  (nextHour < 10) ? String.format("%02d",  nextHour)
-				: Integer.toString(nextHour);
+		finalSecond = String.format("%02d", nextSecond);
+		finalMinute = String.format("%02d", nextMinute);
+		finalHour = String.format("%02d",  nextHour);
 		
 		
 		System.out.print("Dans une seconde, il sera :" + finalHour + ":" + finalMinute + ":" + finalSecond);
