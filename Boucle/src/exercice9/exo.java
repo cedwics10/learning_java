@@ -6,13 +6,13 @@ public class exo {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int plusGrand = 0;
+		int plusGrand = 0,nombre;
 		Scanner scanner = new Scanner(System.in);
 
 		for(int i = 1; i <= 20; i++)
 		{
 			System.out.println("Saisissez un nombre");
-			int nombre = scanner.nextInt();
+			nombre = scanner.nextInt();
 			
 			if(nombre > plusGrand)
 				plusGrand = nombre;
