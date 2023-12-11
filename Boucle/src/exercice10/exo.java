@@ -6,22 +6,22 @@ public class exo {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		double plusGrand = Double.NEGATIVE_INFINITY;
+		int plusGrand = 0;
 		int positionPlusGrand = 0;
 		Scanner scanner = new Scanner(System.in);
 
 		for (int i = 1; i <= 20; i++) {
 			System.out.println("Saisissez un nombre");
-			double nombre = scanner.nextDouble();
+			int nombre = scanner.nextInt();
 
 			if (nombre > plusGrand) {
 				plusGrand = nombre;
 				positionPlusGrand = i;
 			}
-			System.out.println("Nombre #" + i + " = " + (int) nombre);
+			System.out.println("Nombre #" + i + " = " + nombre);
 		}
 
-		System.out.println("Le nombre le plus grand est : " + (int) plusGrand + " en position " + positionPlusGrand);
+		System.out.println("Le nombre le plus grand est : " + plusGrand + " en position " + positionPlusGrand);
 	}
 
 }
