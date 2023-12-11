@@ -13,7 +13,7 @@ public class exo {
 		
 		nombreEtoiles = scanner.nextInt();
 
-		for(int i = 1; i <= nombreEtoiles; i++)
+		for(int i = 1; i <= nombreEtoiles; i--)
 		{
 			System.out.println(etoile.repeat(nombreEtoiles));
 		}
