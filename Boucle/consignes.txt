@@ -1,0 +1,48 @@
+
+BOUCLE FOR
+1-    Écrire un algorithme qui demande à l'utilisateur un nombre et qui affiche les nombres de 1 jusqu’à ce nombre.
+
+
+2-    Ecrire un algorithme qui demande un nombre de départ, et qui ensuite affiche les dix nombres suivants. Par exemple, si l'utilisateur entre le nombre 17, le programme affichera les nombres de 18 à 27.
+
+
+3-    Ecrire un algorithme qui demande un nombre de départ, et qui ensuite écrit la table de multiplication de ce nombre, présentée comme suit (cas où l'utilisateur entre le nombre 7) :
+
+Table de 7 : 
+7 x 1 = 7 
+7 x 2 = 14 
+7 x 3 = 21 
+… 
+7 x 10 = 70
+
+
+4-    Écrire un algorithme qui demande à l'utilisateur un nombre et qui affiche les nombres pairs de 1 jusqu’à ce nombre.
+Ex : les nombres pairs de 1 à 11 sont : 2 4 6 8 10
+
+5-    Écrire un algorithme qui demande à l'utilisateur un nombre et qui affiche les nombres impairs de 1 jusqu’à ce nombre.
+Ex : les nombres impairs de 1 à 11 sont : 1 3 5 7 9 11
+
+6-    Écrire un algorithme qui demande à l'utilisateur deux nombres et qui affiche les nombres du plus petit au plus grand.
+Ex : Donnez le nbr 1 : 9
+       Donnez le nbr 2 : 4
+       Le programme : 4 5 6 7 8 9
+
+7-    Ecrire un algorithme qui demande un nombre de départ, et qui calcule la somme des entiers jusqu’à ce nombre. Par exemple, si l’on entre 5, le programme doit calculer :
+1 + 2 + 3 + 4 + 5 = 15
+
+8-    Ecrire un algorithme qui demande un nombre de départ, et qui calcule sa factorielle. 
+NB : la factorielle de 8, notée 8 ! vaut 
+1 x 2 x 3 x 4 x 5 x 6 x 7 x 8
+
+
+9-    Ecrire un algorithme qui demande successivement 20 nombres à l’utilisateur, et qui lui dise ensuite quel était le plus grand parmi ces 20 nombres :
+Entrez le nombre numéro 1 : 12 
+Entrez le nombre numéro 2 : 14 
+etc. 
+Entrez le nombre numéro 20 : 6 
+Le plus grand de ces nombres est : 14
+
+
+
+10-    Modifiez ensuite l’algorithme pour que le programme affiche en quelle position avait été saisie ce nombre.
+Exemple :  C’était le nombre numéro 2
