@@ -30,8 +30,8 @@ public class exo {
 			tropGrand = nombreUtilisateur > MAXIMUM;
 			tropPetit = nombreUtilisateur < MINIMUM;
 			
-			if(tropGrand) System.out.println("Le nombre est trop grand");
-			if(tropPetit) System.out.println("Le nombre est trop petit");
+			if(tropGrand) System.out.println("Plus petit !");
+			if(tropPetit) System.out.println("Plus grand !");
 				
 		} while (tropGrand || tropPetit);
 

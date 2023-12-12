@@ -2,7 +2,6 @@ package exercice4;
 
 import java.util.Scanner;
 
-
 public class exo {
 
 	public static void main(String[] args) {
