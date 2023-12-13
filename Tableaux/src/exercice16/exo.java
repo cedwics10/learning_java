@@ -1,4 +1,4 @@
-package exercice16;
+package exercice3;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -16,11 +16,10 @@ public class exo {
 			tableau[i] = clavier.nextInt();
 		}
 		
-		for (int i = 0; i < taille; i++) {
-			tableau[i]++;
-			System.out.print(tableau[i] + " ");
-		}		
-		
+		for(int j = 0; j < taille; j++)  {
+			tableau[j]++;
+			System.out.print(tableau[j] + " ");
+		}
 		
 	}
 

@@ -6,15 +6,14 @@ public class exo {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// Inverser un tableau sans utiliser un auter tableau.
+		// Ajouter un à chaque élément du tableau de longueur quelconque
 		Scanner clavier = new Scanner(System.in);
 		System.out.println("Indiquer la longueur de votre tableau : ");
 		int taille = clavier.nextInt();
 		
 		int[] tableauUn = new int[taille];
 		int[] tableauDeux = new int[taille];
-		int[] tableauTrois = new int[taille];
-		
+
 		for (int i = 0; i < taille; i++) {
 			System.out.println("Saisir l'élément " + i + " du tableau un");
 			int saisie = clavier.nextInt();
