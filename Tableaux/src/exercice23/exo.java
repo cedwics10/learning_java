@@ -22,7 +22,6 @@ public class exo {
 		
 		System.out.println("Avec quelle clé l'échange-t-on  ?");
 		int echange = clavier.nextInt();
-				
 		
 		System.out.println("Le nouveau tableau :");
 		for(int i = 0; i < tab.length; i++)
@@ -34,8 +33,6 @@ public class exo {
 				cleAffiche = echange;
 			System.out.print(tab[cleAffiche] + " ");
 		}
-		
-		
 	}
 
 }

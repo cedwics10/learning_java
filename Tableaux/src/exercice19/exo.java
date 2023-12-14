@@ -17,7 +17,8 @@ public class exo {
 			tableau[i] = saisie;
 		}
 		
-		int somme = 0, moyenne;
+		int somme = 0;
+		double moyenne;
 		
 		System.out.println("Les notes de la classe sont les suivantes :");
 		for (int i = 0; i < taille; i++) {
