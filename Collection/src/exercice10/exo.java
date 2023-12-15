@@ -7,7 +7,7 @@ public class exo {
 
 	public static void main(String[] args) {
 		String recherche;
-		int index;
+		boolean isSet;
 		Scanner clavier = new Scanner(System.in);
 		ArrayList<String> languages = new ArrayList();
 		languages.add("PHP");
@@ -18,13 +18,13 @@ public class exo {
 		System.out.println("Taper la valeur à chercher");
 
 		recherche = clavier.next();
-		index = languages.indexOf(recherche);
+		isSet = languages.contains(recherche);
 
-		if (index != -1) {
-			System.out.println("Oui : index = " + index);
-		} else {
+		if (isSet)
+			System.out.println("Oui : index = " + isSet);
+		else
 			System.out.println("Non");
-		}
+
 	}
 
 }
