@@ -2,7 +2,6 @@ INDEX VERSION 1.134+C:\Users\cedri\eclipse-workspace\.metadata\.plugins\org.ecli
 2396663329.index
 1100127232.index
 501573990.index
-1236922523.index
 954988894.index
 3413270776.index
 3729259047.index
