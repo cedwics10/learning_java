@@ -9,7 +9,7 @@ public class Console {
 
 	public static void main(String[] args) {
 		
-		System.out.println("================\n" 
+		System.out.print("================\n" 
 		+ "=== Todolist ===\n");
 				
 		int choix = 0;
@@ -19,7 +19,7 @@ public class Console {
 			choix = clavier.nextInt();
 			
 			makeChoice(choix);
-			
+			s
 		} while (choix != 4);
 		System.out.println("'Goodbye' ");
 	}
