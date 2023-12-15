@@ -1,10 +1,14 @@
 package exercice16;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class exo {
-
+	/* 
+	 * 
+	 * 
+	 * 
+	 */
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner clavier = new Scanner(System.in);

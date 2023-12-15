@@ -19,7 +19,7 @@ public class Console {
 			choix = clavier.nextInt();
 			
 			makeChoice(choix);
-			s
+			
 		} while (choix != 4);
 		System.out.println("'Goodbye' ");
 	}

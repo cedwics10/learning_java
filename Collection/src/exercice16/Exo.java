@@ -1,13 +1,14 @@
 package exercice16;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Exo {
 	
 	public static void main(String[] args) {
 
 		ArrayList<String> languages = new ArrayList();
-		ArrayList<String> languages2 = new ArrayList();
+		List<String> languages2;
 
 		
 		languages.add("PHP");
@@ -20,9 +21,7 @@ public class Exo {
 		languages.add("Laravel");
 		languages.add("Symfony");
 		
-		languages.subList(1,4);
-
-		languages2.addAll(languages);
+		languages2 = languages.subList(0,4);
 		
 		System.out.print(languages2);
 	}
