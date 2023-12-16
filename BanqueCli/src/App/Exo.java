@@ -120,8 +120,9 @@ public class Exo {
 	}
 
 	public static void addAccount() {
-		System.out.println("Choisir un client :");
+		
 		getClientList();
+		System.out.println("Quel est le numéro du client :");
 		int idClient = clavier.nextInt();
 		if (clientNotExists(idClient)) {
 			System.out.println("Le client n'existe pas.");
@@ -138,7 +139,7 @@ public class Exo {
 	}
 
 	public static void insertAccount(String rib, double solde, int client_id) {
-		compte_id.add(compte_id.size());
+		compte_id.add(compte_id.size()+1);
 		compte_rib.add(rib);
 		compte_solde.add(solde);
 		compte_client_id.add(client_id);
@@ -182,7 +183,7 @@ public class Exo {
 		if (age == 0)
 			return;
 
-		client_id.add(client_id.size());
+		client_id.add(client_id.size()+1);
 		client_prenom.add(prenom);
 		client_nom.add(nom);
 		client_age.add(age);
@@ -200,7 +201,7 @@ public class Exo {
 
 		for (int acc = 0; acc < AccountsNumber; acc++) {
 			displayAccount(acc);
-			displayCreditCardList(acc);
+			// displayCreditCardList(acc);
 		}
 	}
 
@@ -223,11 +224,10 @@ public class Exo {
 	public static void displayAccount(int accId)
 	{
 		System.out.print("- Compte #" + compte_id.get(accId) + ", ");
-		System.out.print("RIB : " + compte_rib.get(accId) + ", ");
+		System.out.println("RIB : " + compte_rib.get(accId) + ", ");
 		System.out.print("Solde: " + compte_solde.get(accId) + ", ");
-		System.out.print("Numéro client : "  + compte_client_id.get(accId));
+		System.out.println("Numéro client : "  + compte_client_id.get(accId));
 	}
-	
 	/* END - COMPTE */
 
 	/* BEGIN - CLIENT */
@@ -237,7 +237,8 @@ public class Exo {
 	}
 
 	public static void displayClient(int cli) {
-		System.out.println("# " + client_nom.get(cli).toUpperCase() + " " + client_prenom.get(cli) + " - FICHE CLIENT");
+		System.out.print("[#" + client_id.get(cli) + "] ");
+		System.out.println(client_nom.get(cli).toUpperCase() + " " + client_prenom.get(cli) + " - FICHE CLIENT");
 		System.out.println("-> Ville : " + client_ville.get(cli));
 		System.out.println("-> Âge : " + client_age.get(cli));
 		System.out.println("-> Comptes :");
