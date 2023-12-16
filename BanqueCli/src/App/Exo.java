@@ -34,14 +34,12 @@ public class Exo {
 	public static void main(String[] args) {
 		printWelcomeText();
 
-		do {
+		while (true) {
 			displayMenu();
 			System.out.println("Tapez votre choix :");
 			userChoice = clavier.nextInt();
 			proceedToChoice(userChoice);
-		} while (userChoice != QUITTER);
-
-		System.out.println("Aurevoir ! Hâte de vous revoir à " + NOM_BANQUE);
+		}
 	}
 
 	public static void printWelcomeText() {
@@ -106,7 +104,36 @@ public class Exo {
 		System.out.print("\n");
 	}
 
-	/* BEGIN - CRUD */
+	/* START - ACTION METHODS */
+	public static void getClientList() {
+		int clientsNumber = client_id.size();
+
+		if (clientsNumber == 0) {
+			System.out.println("> Aucun client n'est inscrit.");
+			return;
+		}
+
+		for (int cli = 0; cli < clientsNumber; cli++) {
+			displayClient(cli);
+			getAccountList(cli);
+		}
+	}
+	
+	public static void getAccountList() {
+		int AccountsNumber = compte_id.size();
+
+		if (AccountsNumber == 0) {
+			System.out.println("> Aucun client n'est inscrit.");
+			return;
+		}
+
+		for (int acc = 0; acc < AccountsNumber; acc++) {
+			displayAccount(acc);
+			// displayCreditCardList(acc);
+		}
+	}
+	
+	/* END - ACTION METHODS */
 
 	/* BEGIN - ACCOUNT */
 	public static void getAccount(int idAccount) {
@@ -120,7 +147,7 @@ public class Exo {
 	}
 
 	public static void addAccount() {
-		
+
 		getClientList();
 		System.out.println("Quel est le numéro du client :");
 		int idClient = clavier.nextInt();
@@ -128,10 +155,10 @@ public class Exo {
 			System.out.println("Le client n'existe pas.");
 			return;
 		}
-		
+
 		System.out.println("Quel est le montant à déposer ?");
 		double soldeDepart = clavier.nextDouble();
-		
+
 		compte_id.add(idClient);
 		compte_solde.add(soldeDepart);
 		compte_rib.add("FRXX XXXX XXXX XXXX XXXX");
@@ -139,7 +166,7 @@ public class Exo {
 	}
 
 	public static void insertAccount(String rib, double solde, int client_id) {
-		compte_id.add(compte_id.size()+1);
+		compte_id.add(compte_id.size() + 1);
 		compte_rib.add(rib);
 		compte_solde.add(solde);
 		compte_client_id.add(client_id);
@@ -161,18 +188,8 @@ public class Exo {
 	/* END - ACCOUNT */
 
 	/* BEGINNING - CLEINT */
-	public static void getClientList() {
-		int clientsNumber = client_id.size();
+	public static void researchClient() {
 
-		if (clientsNumber == 0) {
-			System.out.println("> Aucun client n'est inscrit.");
-			return;
-		}
-
-		for (int cli = 0; cli < clientsNumber; cli++) {
-			displayClient(cli);
-			getAccountList(cli);
-		}
 	}
 
 	public static void getClientList(int client) {
@@ -183,7 +200,7 @@ public class Exo {
 		if (age == 0)
 			return;
 
-		client_id.add(client_id.size()+1);
+		client_id.add(client_id.size() + 1);
 		client_prenom.add(prenom);
 		client_nom.add(nom);
 		client_age.add(age);
@@ -191,19 +208,10 @@ public class Exo {
 
 	}
 
-	public static void getAccountList() {
-		int AccountsNumber = compte_id.size();
+	/* END - CLIENT */
 
-		if (AccountsNumber == 0) {
-			System.out.println("> Aucun client n'est inscrit.");
-			return;
-		}
+	/* BEGIN - ACCOUNT */
 
-		for (int acc = 0; acc < AccountsNumber; acc++) {
-			displayAccount(acc);
-			// displayCreditCardList(acc);
-		}
-	}
 
 	public static void getAccountList(int idClient) {
 		int nextIdAccount = 0;
@@ -220,20 +228,34 @@ public class Exo {
 		 * all concerned clients
 		 */
 	}
-	
-	public static void displayAccount(int accId)
-	{
+
+	public static void displayAccount(int accId) {
 		System.out.print("- Compte #" + compte_id.get(accId) + ", ");
 		System.out.println("RIB : " + compte_rib.get(accId) + ", ");
 		System.out.print("Solde: " + compte_solde.get(accId) + ", ");
-		System.out.println("Numéro client : "  + compte_client_id.get(accId));
+		System.out.println("Numéro client : " + compte_client_id.get(accId));
+	}
+	
+	public static void removeAccount() {
+		System.out.println("Quel est le nuémro du compte à supprimer ? (0 pour annuler)");
+		int idClient = clavier.nextInt();
+		if (idClient == 0)
+			return;
+
+		if (clientNotExists(idClient))
+		{
+			System.out.println("Le client n'existe pas. Aucune suprpession n'uara lieu.");
+			return;
+		}
+		deleteClient(idClient);
+
 	}
 	/* END - COMPTE */
 
 	/* BEGIN - CLIENT */
-	public static void researchClient() {
-		// what research ?
-		// select from client id
+	public static boolean isClientExists(int idClient) {
+		int clientId = client_id.indexOf(idClient);
+		return (clientId == -1);
 	}
 
 	public static void displayClient(int cli) {
@@ -270,30 +292,40 @@ public class Exo {
 	}
 
 	public static void removeClient() {
-		// if(compte_client_id.indexOf(idClient) == -1)
-			
+		System.out.println("Quel est le nuémro du client à supprimer ? (0 pour annuler)");
+		int idClient = clavier.nextInt();
+		if (idClient == 0)
+			return;
+
+		if (clientNotExists(idClient))
+		{
+			System.out.println("Le client n'existe pas. Aucune suprpession n'uara lieu.");
+			return;
+		}
+		deleteClient(idClient);
 	}
-	
-	public static void deleteClient() {
-		
+
+	public static void deleteClient(int idClient) {
+		int index = client_id.indexOf(idClient);
+		client_id.remove(index);
+		client_prenom.remove(index);
+		client_nom.remove(index);
+		client_ville.remove(index);
+		client_age.remove(index);
 	}
 	/* END - CLIENT */
 
 	/* BEGIN - CREDIT CARD */
 
 	public static void adDcreditCard() {
-		// Give number of account
-		// Give digits of the card
-		// Give expiration date
-		// Give account number
-
 		// Then : create a new card
+		System.out.println("Donnez le numéro du client :");
+		int clientId = clavier.nextInt();
+
 	}
-	
-	public static void insertCeritCard(String number,
-			int a_exp, int id_compte)
-	{
-		carte_id.add(carte_id.getLast())
+
+	public static void insertCeritCard(String number, int a_exp, int id_compte) {
+		carte_id.add(carte_id.getLast() + 1);
 		carte_numero.add(number);
 		carte_a_exp.add(a_exp);
 		carte_id_compte.add(id_compte);
@@ -327,8 +359,7 @@ public class Exo {
 	public static void makeWithdraw() {
 		System.out.println("Le retrait se fait sur quel individu ?");
 		int idClient = clavier.nextInt();
-		if(client_id.indexOf(idClient) === -1)
-		{
+		if (client_id.indexOf(idClient) == -1) {
 			System.out.println("Le comtpe n'existe pas");
 			return;
 		}
@@ -338,36 +369,18 @@ public class Exo {
 		// which amount of money ?
 	}
 	/* END - CREDIT CARD */
-
-
+	
+	/* START - OPTIONS */
 	/* END - OPTIONS */
 
-	/* BEGINNING - CRUD */
-
-	public static void insertCreditCard(String numero, int a_exp, int id_compte) {
-		carte_id.add(carte_id.size());
-		carte_numero.add(numero);
-		carte_a_exp.add(a_exp);
-		carte_id_compte.add(id_compte);
-	}
-
-	public static void deleteClient(int idClient) {
-
-		int cleClient = client_id.indexOf(idClient);
-		client_id.remove(cleClient);
-
-		client_prenom.remove(cleClient);
-		client_nom.remove(cleClient);
-		client_age.remove(cleClient);
-		client_ville.remove(cleClient);
-
-	}
-
-	/* END - CRUD */
-
 	public static void quitApp() {
-		System.out.println("Êets-vous sûr de vouloir quitter l'application ? ");
-
+		System.out.println("Êets-vous sûr de vouloir quitter l'application ? (y/n)");
+		String texte = clavier.next();
+		if (texte.equals("y") || texte.equals("yes")) {
+			System.out.println("Aurevoir ! Hâte de vous revoir à " + NOM_BANQUE);
+			System.exit(0);
+		} else
+			return;
 	}
 
 }
