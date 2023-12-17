@@ -115,155 +115,68 @@ public class Exo {
 
 		for (int cli = 0; cli < clientsNumber; cli++) {
 			displayClient(cli);
-			getAccountList(cli);
+			// displayAccount(cli);
 		}
 	}
-	
+
 	public static void getAccountList() {
 		int AccountsNumber = compte_id.size();
 
+		if (AccountsNumber == 0) {
+			System.out.println("> Aucun compte n'existe dans la banque.");
+			return;
+		}
+
+		if (compte_id.isEmpty())
+			return;
+
+		for (int acc = 0; acc < AccountsNumber; acc++) {
+			displayAccount(acc);
+		}
+	}
+
+	public static void getAccountList(int idClient) {
+		int AccountsNumber = compte_id.size();
+		boolean noAccountExists = compte_client_id.indexOf(idClient) == -1;
+		
 		if (AccountsNumber == 0) {
 			System.out.println("> Aucun client n'est inscrit.");
 			return;
 		}
 
+		if (noAccountExists)
+			return;
+		
 		for (int acc = 0; acc < AccountsNumber; acc++) {
-			displayAccount(acc);
-			// displayCreditCardList(acc);
+			if (compte_client_id.get(acc) == idClient)
+				displayAccount(acc);
 		}
 	}
-	
-	/* END - ACTION METHODS */
 
-	/* BEGIN - ACCOUNT */
-	public static void getAccount(int idAccount) {
-		int indexAccount = compte_id.indexOf(idAccount);
-		if (indexAccount == -1)
-			System.out.println("Recherche invalide.");
+	public static void displayCreditCardList() {
+		int creditCardNumber = carte_id.size();
 
-		System.out.println("Compte #" + idAccount + ", RIB : " + compte_rib.get(indexAccount) + ", Solde : "
-				+ compte_solde.get(indexAccount));
-
-	}
-
-	public static void addAccount() {
-
-		getClientList();
-		System.out.println("Quel est le numéro du client :");
-		int idClient = clavier.nextInt();
-		if (clientNotExists(idClient)) {
-			System.out.println("Le client n'existe pas.");
+		if (creditCardNumber == 0) {
+			System.out.println(">>> Aucune carte de crédit n'existe pour le compte.");
 			return;
 		}
 
-		System.out.println("Quel est le montant à déposer ?");
-		double soldeDepart = clavier.nextDouble();
-
-		compte_id.add(idClient);
-		compte_solde.add(soldeDepart);
-		compte_rib.add("FRXX XXXX XXXX XXXX XXXX");
-		compte_client_id.add(idClient);
+		for (int cli = 0; cli < creditCardNumber; cli++) {
+			displayCreditCard(cli);
+		}
 	}
 
-	public static void insertAccount(String rib, double solde, int client_id) {
-		compte_id.add(compte_id.size() + 1);
-		compte_rib.add(rib);
-		compte_solde.add(solde);
-		compte_client_id.add(client_id);
-	}
+	public static void displayCreditCardList(int idAccount) {
+		int creditCardNumber = carte_id.size();
 
-	public static void removeAccount() {
-		// check if the account is linked to a credit card
-	}
-
-	public static void deleteAccount(int idAccount) {
-		int cleClient = compte_id.indexOf(idAccount);
-
-		compte_id.remove(cleClient);
-		compte_rib.remove(cleClient);
-		compte_solde.remove(cleClient);
-		compte_client_id.remove(cleClient);
-	}
-
-	/* END - ACCOUNT */
-
-	/* BEGINNING - CLEINT */
-	public static void researchClient() {
-
-	}
-
-	public static void getClientList(int client) {
-
-	}
-
-	public static void insertClient(String prenom, String nom, String ville, int age) {
-		if (age == 0)
+		if (creditCardNumber == 0) {
+			System.out.println(">>> Aucune carte de crédit n'existe pour le compte.");
 			return;
-
-		client_id.add(client_id.size() + 1);
-		client_prenom.add(prenom);
-		client_nom.add(nom);
-		client_age.add(age);
-		client_ville.add(ville);
-
-	}
-
-	/* END - CLIENT */
-
-	/* BEGIN - ACCOUNT */
-
-
-	public static void getAccountList(int idClient) {
-		int nextIdAccount = 0;
-
-		while (nextIdAccount != -1) {
-			nextIdAccount = compte_client_id.indexOf(idClient);
-
-			if (nextIdAccount != -1)
-				getAccount(nextIdAccount);
 		}
 
-		/*
-		 * Look for all account whose client_id that are equal to idClient Then watch
-		 * all concerned clients
-		 */
-	}
-
-	public static void displayAccount(int accId) {
-		System.out.print("- Compte #" + compte_id.get(accId) + ", ");
-		System.out.println("RIB : " + compte_rib.get(accId) + ", ");
-		System.out.print("Solde: " + compte_solde.get(accId) + ", ");
-		System.out.println("Numéro client : " + compte_client_id.get(accId));
-	}
-	
-	public static void removeAccount() {
-		System.out.println("Quel est le nuémro du compte à supprimer ? (0 pour annuler)");
-		int idClient = clavier.nextInt();
-		if (idClient == 0)
-			return;
-
-		if (clientNotExists(idClient))
-		{
-			System.out.println("Le client n'existe pas. Aucune suprpession n'uara lieu.");
-			return;
+		for (int cli = 0; cli < creditCardNumber; cli++) {
+			displayCreditCard(cli);
 		}
-		deleteClient(idClient);
-
-	}
-	/* END - COMPTE */
-
-	/* BEGIN - CLIENT */
-	public static boolean isClientExists(int idClient) {
-		int clientId = client_id.indexOf(idClient);
-		return (clientId == -1);
-	}
-
-	public static void displayClient(int cli) {
-		System.out.print("[#" + client_id.get(cli) + "] ");
-		System.out.println(client_nom.get(cli).toUpperCase() + " " + client_prenom.get(cli) + " - FICHE CLIENT");
-		System.out.println("-> Ville : " + client_ville.get(cli));
-		System.out.println("-> Âge : " + client_age.get(cli));
-		System.out.println("-> Comptes :");
 	}
 
 	public static void addClient() {
@@ -287,75 +200,6 @@ public class Exo {
 		System.out.println(message);
 	}
 
-	public static boolean clientNotExists(int idClient) {
-		return client_id.indexOf(idClient) == -1;
-	}
-
-	public static void removeClient() {
-		System.out.println("Quel est le nuémro du client à supprimer ? (0 pour annuler)");
-		int idClient = clavier.nextInt();
-		if (idClient == 0)
-			return;
-
-		if (clientNotExists(idClient))
-		{
-			System.out.println("Le client n'existe pas. Aucune suprpession n'uara lieu.");
-			return;
-		}
-		deleteClient(idClient);
-	}
-
-	public static void deleteClient(int idClient) {
-		int index = client_id.indexOf(idClient);
-		client_id.remove(index);
-		client_prenom.remove(index);
-		client_nom.remove(index);
-		client_ville.remove(index);
-		client_age.remove(index);
-	}
-	/* END - CLIENT */
-
-	/* BEGIN - CREDIT CARD */
-
-	public static void adDcreditCard() {
-		// Then : create a new card
-		System.out.println("Donnez le numéro du client :");
-		int clientId = clavier.nextInt();
-
-	}
-
-	public static void insertCeritCard(String number, int a_exp, int id_compte) {
-		carte_id.add(carte_id.getLast() + 1);
-		carte_numero.add(number);
-		carte_a_exp.add(a_exp);
-		carte_id_compte.add(id_compte);
-	}
-
-	public static void displayCreditCardList() {
-		// Iterate over the list of credit card
-	}
-
-	public static void displayCreditCard(int creditCardId) {
-
-	}
-
-	public static void removeCreditCard() {
-		// display all credit card
-		// Scanner to choose the number of the card
-		// no need to check anything, except the
-		// existence of the key
-		// simple remove
-	}
-
-	public static void deleteCreditCard(int idCreditCard) {
-		int creditCardKey = carte_id.indexOf(idCreditCard);
-
-		carte_id.remove(creditCardKey);
-		carte_numero.remove(creditCardKey);
-		carte_a_exp.remove(creditCardKey);
-		carte_id_compte.remove(creditCardKey);
-	}
-
 	public static void makeWithdraw() {
 		System.out.println("Le retrait se fait sur quel individu ?");
 		int idClient = clavier.nextInt();
@@ -368,10 +212,87 @@ public class Exo {
 		System.out.println("Quell montant ?");
 		// which amount of money ?
 	}
-	/* END - CREDIT CARD */
-	
-	/* START - OPTIONS */
-	/* END - OPTIONS */
+
+	public static void researchClient() {
+	}
+
+	public static void addAccount() {
+		getClientList();
+		System.out.println("Quel est le numéro du client :");
+		int idClient = clavier.nextInt();
+		if (clientNotExists(idClient)) {
+			System.out.println("Ce client n'existe pas.");
+			return;
+		}
+
+		System.out.println("Quel est le montant à déposer ?");
+		double soldeDepart = clavier.nextDouble();
+		int lastKey = (compte_id.size() > 0) ? compte_id.get(compte_id.size() - 1) : 0;
+		compte_id.add(lastKey + 1);
+		compte_solde.add(soldeDepart);
+		compte_rib.add("FRXX XXXX XXXX XXXX XXXX");
+		compte_client_id.add(idClient);
+	}
+
+	public static void adDcreditCard() {
+		// Then : create a new card
+
+		getClientList();
+
+		System.out.println("Donnez le numéro du client :");
+		int clientId = clavier.nextInt();
+		if (clientNotExists(clientId)) {
+			System.out.println("Ce client n'existe pas.");
+			return;
+		}
+
+		getAccountList(clientId);
+
+		System.out.println("Donnez le numéro de compte");
+		int accountId = clavier.nextInt();
+		
+		System.out.println(compte_client_id);
+		
+		if (accountNotBelongsTo(accountId, clientId))
+			System.out.println("Le client ne correspond pas au numéro de carte");
+
+		insertCreditCard("4970 XXXX XXXX XXXX", 2027, clientId);
+
+	}
+
+	public static void removeClient() {
+		System.out.println("Quel est le nuémro du client à supprimer ? (0 pour annuler)");
+		int idClient = clavier.nextInt();
+		if (idClient == 0)
+			return;
+
+		if (clientNotExists(idClient)) {
+			System.out.println("Le client n'existe pas. Aucune suprpession n'aura lieu.");
+			return;
+		}
+		deleteClient(idClient);
+	}
+
+	public static void removeAccount() {
+		// check if the account is linked to a credit card
+		System.out.println("Indiquer le nom du client du compt :");
+		int idClient = clavier.nextInt();
+		if (clientNotExists(idClient)) {
+			System.out.println("Le client n'existe pas.");
+			return;
+		}
+
+		int accountNumber = clavier.nextInt();
+		deleteAccount(accountNumber);
+	}
+
+	public static void removeCreditCard() {
+		// display all credit card
+		// Scanner to choose the number of the card
+		// no need to check anything, except the
+		// existence of the key
+		// simple remove
+	}
 
 	public static void quitApp() {
 		System.out.println("Êets-vous sûr de vouloir quitter l'application ? (y/n)");
@@ -383,4 +304,118 @@ public class Exo {
 			return;
 	}
 
+	/* END - ACTION METHODS */
+
+	/* START - INSERT METHODS */
+	public static void insertAccount(String rib, double solde, int client_id) {
+		compte_id.add(compte_id.size() + 1);
+		compte_rib.add(rib);
+		compte_solde.add(solde);
+		compte_client_id.add(client_id);
+	}
+
+	public static void insertCreditCard(String number, int a_exp, int id_compte) {
+		int idCard = (carte_id.size() > 0) ? carte_id.getLast() + 1 : 1;
+		carte_id.add(idCard);
+		carte_numero.add(number);
+		carte_a_exp.add(a_exp);
+		carte_id_compte.add(id_compte);
+	}
+
+	public static void insertClient(String prenom, String nom, String ville, int age) {
+		if (age == 0)
+			return;
+		
+		int lastId = (client_id.size() == 0) ? 0 : client_id.reversed().get(0);
+		client_id.add(lastId + 1);
+		client_prenom.add(prenom);
+		client_nom.add(nom);
+		client_age.add(age);
+		client_ville.add(ville);
+	}
+	/* END - INSERT METHODS */
+
+	/* START - VIEW METHODS */
+	public static void getAccount(int idAccount) {
+		int indexAccount = compte_id.indexOf(idAccount);
+		if (indexAccount == -1)
+			System.out.println("Recherche invalide.");
+
+		System.out.println("Compte #" + idAccount + ", RIB : " + compte_rib.get(indexAccount) + ", Solde : "
+				+ compte_solde.get(indexAccount));
+
+	}
+
+	public static void displayAccount(int accId) {
+		System.out.print("- Compte #" + compte_id.get(accId) + ", ");
+		System.out.println("RIB : " + compte_rib.get(accId) + ", ");
+		System.out.print("Solde: " + compte_solde.get(accId) + ", ");
+		System.out.println("Numéro client : " + compte_client_id.get(accId));
+	}
+
+	public static void displayClient(int cli) {
+		System.out.print("[#" + client_id.get(cli) + "] ");
+		System.out.println(client_nom.get(cli).toUpperCase() + " " + client_prenom.get(cli) + " - FICHE CLIENT");
+		System.out.println("-> Ville : " + client_ville.get(cli));
+		System.out.println("-> Âge : " + client_age.get(cli));
+		System.out.println("-> Comptes :");
+	}
+
+	public static void displayCreditCard(int creditCardId) {
+		System.out.print("[[[#" + carte_id.get(creditCardId) + "]]]");
+		System.out
+				.print(" " + carte_numero.get(creditCardId) + ", Expiration : " + carte_a_exp.get(creditCardId) + ",");
+		System.out.println("Numéro compte : " + carte_id_compte.get(creditCardId));
+	}
+	/* END - VIEW METHODS */
+
+	/* START - DELETE METHODS */
+	public static void deleteAccount(int idAccount) {
+		int cleClient = compte_id.indexOf(idAccount);
+
+		compte_id.remove(cleClient);
+		compte_rib.remove(cleClient);
+		compte_solde.remove(cleClient);
+		compte_client_id.remove(cleClient);
+	}
+
+	public static void deleteClient(int idClient) {
+		int index = client_id.indexOf(idClient);
+		client_id.remove(index);
+		client_prenom.remove(index);
+		client_nom.remove(index);
+		client_ville.remove(index);
+		client_age.remove(index);
+	}
+
+	public static void deleteCreditCard(int idCreditCard) {
+		int creditCardKey = carte_id.indexOf(idCreditCard);
+
+		carte_id.remove(creditCardKey);
+		carte_numero.remove(creditCardKey);
+		carte_a_exp.remove(creditCardKey);
+		carte_id_compte.remove(creditCardKey);
+	}
+
+	/* END - DELETE METHODS */
+
+	/* START - TESTS */
+	public static boolean isClientExists(int idClient) {
+		int clientId = client_id.indexOf(idClient);
+		return (clientId == -1);
+	}
+
+	public static boolean clientNotExists(int idClient) {
+		return client_id.indexOf(idClient) == -1;
+	}
+
+	public static boolean creditCardNotExists(int idCard) {
+		return carte_id.indexOf(idCard) == -1;
+	}
+
+	public static boolean accountNotBelongsTo(int accId, int clientId) {
+		int idIndexAccount = compte_id.indexOf(accId);
+		return compte_client_id.indexOf(idIndexAccount) != clientId;
+	}
+	/* END - TESTS */
 }
