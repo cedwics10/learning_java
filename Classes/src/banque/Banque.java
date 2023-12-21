@@ -285,5 +285,16 @@ public class Banque {
 
 		return -1;
 	}
+	
+	public static int getCreditCardIndex(int userId) {
+
+		for (int c = 0; c < listeCartesBleues.size(); c++) {
+			if (listeComptes.get(c).getId() == userId) {
+				return c;
+			}
+		}
+
+		return -1;
+	}
 
 }
