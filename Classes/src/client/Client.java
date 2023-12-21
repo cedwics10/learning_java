@@ -7,19 +7,19 @@ public class Client {
 	private String nom;
 	private String prenom;
 	private String ville;
-	private String email;
+	private int age;
 
 	public Client() {
 		this.id = Client.nombreInstances;
 		Client.nombreInstances++;
 	}
 
-	public Client(String nom, String prenom, String ville, String email) {
+	public Client(String nom, String prenom, String ville, int age) {
 		this.id = Client.nombreInstances;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.ville = ville;
-		this.email = email;
+		this.age = age;
 
 		Client.nombreInstances++;
 
@@ -53,17 +53,17 @@ public class Client {
 		this.ville = ville;
 	}
 
-	public String getEmail() {
-		return this.email;
+	public int getAge() {
+		return this.age;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	public String toString() {
 		return "--- Fiche client [#" + this.id + "] \n" + "> Nom : " + this.nom + "\n" + "> Prénom : " + this.prenom
-				+ "\n" + "> Ville : " + this.ville + "\n" + "> Email : " + this.email;
+				+ "\n" + "> Ville : " + this.ville + "\n" + "> ÂGE : " + this.age;
 	}
 
 }

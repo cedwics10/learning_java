@@ -1,29 +1,57 @@
 package banque;
 
 public class Compte {
-	private static int id = 1;
-	private String numero;
-	private int a_exp;
-	private int id_compte;
-	
-	Compte(String numero, int a_exp, int id_compte)
+	private static int compteur = 1;
+	private int id;
+	private String rib;
+	private double solde;
+	private int client_id;
+
+	Compte(String rib, double solde, int id_compte) {
+		this.id = compteur;
+		this.rib = rib;
+		this.solde = solde;
+		this.client_id = id_compte;
+
+		Compte.compteur++;
+
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public String getRib() {
+		return this.rib;
+	}
+
+	public void setRib(String Rib) {
+		this.rib = Rib;
+	}
+
+	public double getSolde() {
+		return this.solde;
+	}
+
+	public void setSolde(double solde) {
+		this.solde = solde;
+	}
+
+	public int getIdCompte() {
+		return this.client_id;
+	}
+
+	public void setIdCompte(int id_compte) {
+		this.client_id = id_compte;
+	}
+
+	public String toString()
 	{
+		return "   * Compte [#" + this.id + "]"
+		+ "\n    - RIB :" + this.rib + " "
+		+ "\n    - Solde : " + this.solde
+		+ "\n    - Numéro compte client : " + this.client_id; 
 		
 	}
-	
-	public int getId()
-	{
-		return Compte.id;
-	}
-	
-	public String getNumero() {
-		return this.numero;
-	}
-	
-	public Compte setNumero(String numero)
-	{
-		this.numero = numero;
-		return this;
-	}
-	
+
 }
