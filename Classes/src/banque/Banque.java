@@ -12,7 +12,7 @@ public class Banque {
 			"Effectuer un virement", "Rechercher un client", "Ajouter un client", "Ajouter un compte",
 			"Ajouter une carte", "Supprimer un client", "Supprimer un compte", "Supprimer une carte", "Quitter" };
 
-	private static String nomBanque;
+	private String nomBanque;
 	private static ArrayList<Client> listeClients = new ArrayList<Client>();
 	private static ArrayList<Compte> listeComptes = new ArrayList<Compte>();
 	private static ArrayList<CarteBleue> listeCartesBleues = new ArrayList<CarteBleue>();
@@ -126,6 +126,7 @@ public class Banque {
 
 		int compte1 = clavier.nextInt();
 		int indexCompte1 = getAccountIndex(compte1);
+		
 		if (indexCompte1 == -1) {
 			System.out.println("Ce compte n'existe pas.");
 			return;
@@ -252,20 +253,49 @@ public class Banque {
 	}
 
 	public void removeAccount() {
+		System.out.println("Quel est le numéro du compte à supprimer ?");
+		clavier.nextLine();
 
+		int choixIndex = clavier.nextInt();
+
+		int indexSuppresson = getAccountIndex(choixIndex);
+
+		if (indexSuppresson == -1) {
+			System.out.println("Le client numéro " + choixIndex + " n'a pas été retrouvé");
+			return;
+		}
+
+		listeComptes.remove(indexSuppresson);
+
+		System.out.println("Le compte a été supprimé.");
 	}
 
 	public void removeCreditCard() {
+		System.out.println("Quel est l'identifiant de la carte bleue à supprimer ?");
+		clavier.nextLine();
 
+		int choixIndex = clavier.nextInt();
+
+		int indexSuppresson = getCreditCardIndex(choixIndex);
+
+		if (indexSuppresson == -1) {
+			System.out.println("La carte bleue " + choixIndex + " n'a pas été retrouvée.");
+			return;
+		}
+
+		listeCartesBleues.remove(indexSuppresson);
+
+		System.out.println("La carte bleue a été supprimé.");
 	}
 
 	public void quitApp() {
 	}
 
 	/* DB methods */
-
 	public static int getUserIndex(int userId) {
-
+		if(listeClients.size() == 0)
+			return -1;
+		
 		for (int c = 0; c < listeClients.size(); c++) {
 			if (listeClients.get(c).getId() == userId) {
 				return c;
@@ -277,7 +307,10 @@ public class Banque {
 
 	public static int getAccountIndex(int userId) {
 
-		for (int c = 0; c < listeClients.size(); c++) {
+		if(listeComptes.size() == 0)
+			return -1;
+		
+		for (int c = 0; c < listeComptes.size(); c++) {
 			if (listeComptes.get(c).getId() == userId) {
 				return c;
 			}
@@ -288,8 +321,11 @@ public class Banque {
 	
 	public static int getCreditCardIndex(int userId) {
 
+		if(listeCartesBleues.size() == 0)
+			return -1;
+		
 		for (int c = 0; c < listeCartesBleues.size(); c++) {
-			if (listeComptes.get(c).getId() == userId) {
+			if (listeCartesBleues.get(c).getId() == userId) {
 				return c;
 			}
 		}
