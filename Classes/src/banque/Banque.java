@@ -125,7 +125,8 @@ public class Banque {
 		System.out.println("Sur quel compte retire-t-on de l'argent ?t");
 
 		int compte1 = clavier.nextInt();
-		if (getIndexAccount(compte1) == -1) {
+		int indexCompte1 = getAccountIndex(compte1);
+		if (indexCompte1 == -1) {
 			System.out.println("Ce compte n'existe pas.");
 			return;
 		}
@@ -133,15 +134,33 @@ public class Banque {
 		System.out.println("Vers quel compte est retiré l'argent ?");
 
 		int compte2 = clavier.nextInt();
-		if (getIndexAccount(compte2) == -1) {
+		int indexCompte2 = getAccountIndex(compte2);
+
+		if (indexCompte2 == -1) {
 			System.out.println("Ce compte n'existe pas");
 			return;
 		}
-		
+
 		System.out.println("Quel est le montant du prélèvement ?");
 		int montant = clavier.nextInt();
-		
-		if()
+
+		Compte compteClient1 = listeComptes.get(indexCompte1);
+		Compte compteClient2 = listeComptes.get(indexCompte2);
+
+		if (compteClient1.getSolde() < montant) {
+			System.out.println("Le compte " + compte1 + " n'a pas assez de réservss.");
+			return;
+		}
+
+		compteClient1.setSolde(compteClient1.getSolde() - montant);
+		compteClient2.setSolde(compteClient2.getSolde() + montant);
+
+		System.out.println(compteClient1);
+		System.out.println(compteClient2);
+
+		listeComptes.set(indexCompte1, compteClient1);
+		listeComptes.set(indexCompte2, compteClient2);
+
 	}
 
 	public void researchClient() {
@@ -217,15 +236,9 @@ public class Banque {
 		System.out.println("Quel est le numéro du client à supprimer ?");
 		clavier.nextLine();
 
-		int indexSuppresson = -1;
 		int choixIndex = clavier.nextInt();
 
-		for (int c = 0; c < listeClients.size(); c++) {
-			if (listeClients.get(c).getId() == choixIndex) {
-				indexSuppresson = c;
-				break;
-			}
-		}
+		int indexSuppresson = getUserIndex(choixIndex);
 
 		if (indexSuppresson == -1) {
 			System.out.println("Le client numéro " + choixIndex + " n'a pas été retrouvé");
@@ -250,12 +263,23 @@ public class Banque {
 	}
 
 	/* DB methods */
-	public static int getIndexAccount(int numeroCompte) {
 
-		for (int c = 0; c < listeComptes.size(); c++) {
-			int allegedId = listeComptes.get(c).getId();
-			if (allegedId == numeroCompte) {
-				return allegedId;
+	public static int getUserIndex(int userId) {
+
+		for (int c = 0; c < listeClients.size(); c++) {
+			if (listeClients.get(c).getId() == userId) {
+				return c;
+			}
+		}
+
+		return -1;
+	}
+
+	public static int getAccountIndex(int userId) {
+
+		for (int c = 0; c < listeClients.size(); c++) {
+			if (listeComptes.get(c).getId() == userId) {
+				return c;
 			}
 		}
 
