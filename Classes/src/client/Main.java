@@ -50,7 +50,7 @@ public class Main {
 	public static void showClientList() {
 		
 		if(listeClients.size() == 0)
-			System.out.println(">>> AUCUN CLINENT N'EST REFERNECE.");
+			System.out.println(">>> AUCUN CLINENT N'EST REFERNECÉ.");
 		
 		for (Client client : listeClients) {
 			System.out.println(client);
@@ -103,7 +103,7 @@ public class Main {
 		recherche = recherche.toLowerCase();
 
 		System.out.println("Les résultas correspondant à la recherche sont :");
-
+		
 		for (Client client : listeClients) {
 			boolean matchPrenom = client.getPrenom().toLowerCase().contains(recherche);
 			boolean matchNom = client.getNom().toLowerCase().contains(recherche);
@@ -129,7 +129,7 @@ public class Main {
 		}
 
 		if (indexClient == -1) {
-			System.out.println("Le client a éditer n'a pas été trouvé");
+			System.out.println("Le client à éditer n'a pas été trouvé");
 			return;
 		}
 

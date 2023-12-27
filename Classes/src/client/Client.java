@@ -63,7 +63,7 @@ public class Client {
 
 	public String toString() {
 		return "--- Fiche client [#" + this.id + "] \n" + "> Nom : " + this.nom + "\n" + "> Prénom : " + this.prenom
-				+ "\n" + "> Ville : " + this.ville + "\n" + "> ÂGE : " + this.age;
+				+ "\n" + "> Ville : " + this.ville + "\n" + "> Âge : " + this.age;
 	}
 
 }

@@ -37,13 +37,14 @@ public class Compte {
 		this.solde = solde;
 	}
 
-	public int getIdCompte() {
+	public int getClientId() {
 		return this.client_id;
 	}
 
-	public void setIdCompte(int id_compte) {
+	public void setClientId(int id_compte) {
 		this.client_id = id_compte;
 	}
+
 
 	public String toString()
 	{

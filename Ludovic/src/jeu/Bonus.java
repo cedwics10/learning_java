@@ -274,12 +274,16 @@ public class Bonus {
 		System.out.println("\n\n--------------------------");
 		System.out.println("# Ajouter une carte");
 		carte_id.add(countCarte);
+		
 		System.out.println("Donne le n° de la carte : ");
 		carte_num.add(clavier.next());
+		
 		System.out.println("Donne l'année d'expiration : ");
 		carte_aExp.add(clavier.nextInt());
+		
 		System.out.println("Donne l'id du compte lié : ");
 		carte_id_compte.add(clavier.nextInt());
+		
 		System.out.println("--------------------------");
 	}
 

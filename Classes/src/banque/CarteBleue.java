@@ -15,7 +15,7 @@ public class CarteBleue {
 		CarteBleue.nombreCartes++;
 	}
 
-	CarteBleue(int id, String numero, int a_exp, int id_compte) {
+	CarteBleue(String numero, int a_exp, int id_compte) {
 		this();
 
 		this.setNumero(numero);
@@ -53,7 +53,10 @@ public class CarteBleue {
 	}
 
 	public String toString() {
-		return "";
+		return "------ [Carte numéro " + this.id + "]" + "\n"
+	   +  "------ Numéro : " + this.numero + "\n "
+	   +  "------ Année exp : " + this.a_exp + "\n" 
+	   + "------ Id_compte : " + this.id_compte;
 	}
 
 }

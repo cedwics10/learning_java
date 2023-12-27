@@ -31,11 +31,11 @@ public class Banque {
 		do {
 			View.menuPrincipal(Banque.tableOptions);
 			saisie = clavier.nextInt();
-			traiterSaisie(saisie);
+			proceedToInput(saisie);
 		} while (saisie != 12);
 	}
 
-	public void traiterSaisie(int saisie) {
+	public void proceedToInput(int saisie) {
 		switch (saisie) {
 		case 1: // Liste des clients
 			this.getClientList();
@@ -59,7 +59,7 @@ public class Banque {
 			this.addAccount();
 			break;
 		case 8: // Ajouter une carte de crédit
-			this.adDcreditCard();
+			this.addCreditCard();
 			break;
 		case 9: // Remove a client
 			this.removeClient();
@@ -92,7 +92,7 @@ public class Banque {
 
 	public void getAccountList() {
 		if (listeComptes.size() == 0) {
-			System.out.println("Aucun client n'existe dans la liste\n");
+			System.out.println("Aucun compte n'existe dans la liste\n");
 			return;
 		}
 
@@ -110,7 +110,7 @@ public class Banque {
 		}
 
 		for (Compte compteClient : listeComptes) {
-			if (compteClient.getIdCompte() == idClient)
+			if (compteClient.getClientId() == idClient)
 				System.out.println(compteClient);
 		}
 
@@ -118,7 +118,10 @@ public class Banque {
 	}
 
 	public void displayCreditCardList() {
-
+		for(CarteBleue carte : listeCartesBleues)
+		{
+			System.out.println(carte);
+		}
 	}
 
 	public void makeWithdraw() {
@@ -126,7 +129,7 @@ public class Banque {
 
 		int compte1 = clavier.nextInt();
 		int indexCompte1 = getAccountIndex(compte1);
-		
+
 		if (indexCompte1 == -1) {
 			System.out.println("Ce compte n'existe pas.");
 			return;
@@ -229,8 +232,39 @@ public class Banque {
 		listeComptes.add(nouveauCompte);
 	}
 
-	public void adDcreditCard() {
+	public void addCreditCard() {
+		System.out.println("Quel est le numéro du client ?");
+		int numeroClient = clavier.nextInt();
+		int indexClient = getAccountIndex(numeroClient);
+		if (indexClient == -1) {
+			System.out.println("Ce client n'existe pas.");
+			return;
+		}
 
+		getAccountList(numeroClient);
+
+		System.out.println("Donner le numéro de compte du client");
+		int numeroCompte = clavier.nextInt();
+
+		int indexCompte = getAccountIndex(numeroCompte);
+
+		if (indexCompte == -1) {
+			System.out.println("Le compte n'existe pas");
+			return;
+		}
+
+		
+		boolean accountNotMatchsClient = !isAccountBelongsTo(numeroCompte, numeroClient);
+
+		if (accountNotMatchsClient) {
+			System.out.println("Ce compte n'appartient pas au client.");
+			return;
+		}
+
+		CarteBleue maCarte = new CarteBleue("1234 5678 9101 1112", 2025, numeroCompte);
+		listeCartesBleues.add(maCarte);
+		
+		System.out.println("La carte bleue a bien été créé");
 	}
 
 	public void removeClient() {
@@ -241,7 +275,8 @@ public class Banque {
 
 		int indexSuppresson = getUserIndex(choixIndex);
 
-		if (indexSuppresson == -1) {
+		boolean clientNotExists = indexSuppresson == -1;
+		if (clientNotExists) {
 			System.out.println("Le client numéro " + choixIndex + " n'a pas été retrouvé");
 			return;
 		}
@@ -259,8 +294,8 @@ public class Banque {
 		int choixIndex = clavier.nextInt();
 
 		int indexSuppresson = getAccountIndex(choixIndex);
-
-		if (indexSuppresson == -1) {
+		boolean accountNotExists = indexSuppresson == -1;
+		if (accountNotExists) {
 			System.out.println("Le client numéro " + choixIndex + " n'a pas été retrouvé");
 			return;
 		}
@@ -269,16 +304,18 @@ public class Banque {
 
 		System.out.println("Le compte a été supprimé.");
 	}
-
-	public void removeCreditCard() {
+	
+	public void removeCreditCard()
+	{
 		System.out.println("Quel est l'identifiant de la carte bleue à supprimer ?");
 		clavier.nextLine();
 
 		int choixIndex = clavier.nextInt();
 
 		int indexSuppresson = getCreditCardIndex(choixIndex);
+		boolean creditCardNotExists = (indexSuppresson == -1);
 
-		if (indexSuppresson == -1) {
+		if (creditCardNotExists) {
 			System.out.println("La carte bleue " + choixIndex + " n'a pas été retrouvée.");
 			return;
 		}
@@ -293,9 +330,9 @@ public class Banque {
 
 	/* DB methods */
 	public static int getUserIndex(int userId) {
-		if(listeClients.size() == 0)
+		if (listeClients.size() == 0)
 			return -1;
-		
+
 		for (int c = 0; c < listeClients.size(); c++) {
 			if (listeClients.get(c).getId() == userId) {
 				return c;
@@ -307,9 +344,9 @@ public class Banque {
 
 	public static int getAccountIndex(int userId) {
 
-		if(listeComptes.size() == 0)
+		if (listeComptes.size() == 0)
 			return -1;
-		
+
 		for (int c = 0; c < listeComptes.size(); c++) {
 			if (listeComptes.get(c).getId() == userId) {
 				return c;
@@ -318,12 +355,28 @@ public class Banque {
 
 		return -1;
 	}
-	
+
+	public static boolean isAccountBelongsTo(int accountId, int userUd) {
+		int indexAccount = getAccountIndex(accountId);
+		int indexUser = getUserIndex(accountId);
+		
+		if (indexAccount == -1 || indexUser == -1)
+		{
+			System.out.println("Le compte ou le client n'existe pas.");
+			return false;
+		}
+		
+		Compte compte = listeComptes.get(indexAccount);
+		Client user = listeClients.get(indexUser);
+		
+		return compte.getClientId() == user.getId();
+	}
+
 	public static int getCreditCardIndex(int userId) {
 
-		if(listeCartesBleues.size() == 0)
+		if (listeCartesBleues.size() == 0)
 			return -1;
-		
+
 		for (int c = 0; c < listeCartesBleues.size(); c++) {
 			if (listeCartesBleues.get(c).getId() == userId) {
 				return c;
