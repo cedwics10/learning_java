@@ -1,5 +1,9 @@
 package banque;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Main {
@@ -11,20 +15,23 @@ public class Main {
 
 	static int userChoice;
 
+	static Connection connexionBanque;
+
 	static Scanner clavier = new Scanner(System.in);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
+		Database.connect();
+		connexionBanque = Database.connexion;
+
 		printWelcomeText();
-		
-		
+
 		while (true) {
 			displayMenu();
 			System.out.println("Tapez votre choix :");
 			userChoice = clavier.nextInt();
 			proceedToChoice(userChoice);
 		}
-		
-		
+
 	}
 
 	public static void printWelcomeText() {
@@ -44,13 +51,18 @@ public class Main {
 		System.out.println("\n");
 	}
 
-	public static void proceedToChoice(int userChoice) {
-		System.out.println("\n***** Option choisie : " + tableOptions[userChoice]);
+	public static void proceedToChoice(int userChoice) throws SQLException {
+		String optionChoisie = (userChoice < tableOptions.length) ? tableOptions[userChoice] : "Option invalide";
+		System.out.println("\n***** Option choisie : " + optionChoisie);
 		System.out.print("\n");
 
 		switch (userChoice) {
 		case 1: // Liste des clients
-			getClientList();
+			try {
+				getClientList();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 			break;
 		case 2: // Liste des comptes
 			getAccountList();
@@ -91,8 +103,17 @@ public class Main {
 		System.out.print("\n");
 	}
 
-	public static void getClientList() {
+	public static void getClientList() throws SQLException {
+		Statement statement = connexionBanque.createStatement();
+		ResultSet resultat = statement.executeQuery("SELECT id, prenom, age, ville FROM client");
 
+		while (resultat.next()) {
+			int id = resultat.getInt("id");
+			int age = resultat.getInt("age");
+			String prenom = resultat.getString("prenom");
+			String ville = resultat.getString("ville");
+			System.out.println("Client #" + id + " : " + prenom + " (Âge : " + age + "), ville : " + ville);
+		}
 	}
 
 	public static void getAccountList() {
@@ -137,12 +158,12 @@ public class Main {
 	public static void quitApp() {
 		System.out.println("Êets-vous sûr de vouloir quitter l'application ? (y/n)");
 		String texte = clavier.next().toLowerCase();
-		if (texte.equals("y") || texte.equals("yes")) {
+		boolean userQuits = texte.equals("y") || texte.equals("yes");
+		if (userQuits) {
 			System.out.println("Aurevoir ! Hâte de vous revoir à " + NOM_BANQUE);
 			System.exit(0);
 		} else
 			return;
 	}
-	
-	
+
 }

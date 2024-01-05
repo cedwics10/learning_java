@@ -23,7 +23,7 @@ public class Main {
 	         /* Exécution d'une requête de lecture */
 	         ResultSet resultat = statement.executeQuery( "SELECT * FROM users" );
 	         /* Récupération des données du résultat de la requête de lecture */
-	         while ( resultat.next() ) {
+	         while (resultat.next()) {
 	        	 int id = resultat.getInt( "id" );
 	        	 String username = resultat.getString( "username" );
 	        	 String password = resultat.getString( "password" );
