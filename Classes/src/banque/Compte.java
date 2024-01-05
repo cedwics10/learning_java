@@ -8,13 +8,13 @@ public class Compte {
 	private int client_id;
 
 	Compte(String rib, double solde, int id_compte) {
-		this.id = compteur;
+		
+		this.id = Compte.compteur;
 		this.rib = rib;
 		this.solde = solde;
 		this.client_id = id_compte;
-
+		
 		Compte.compteur++;
-
 	}
 
 	public int getId() {

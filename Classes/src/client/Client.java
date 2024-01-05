@@ -15,14 +15,12 @@ public class Client {
 	}
 
 	public Client(String nom, String prenom, String ville, int age) {
-		this.id = Client.nombreInstances;
+		this();
+		
 		this.nom = nom;
 		this.prenom = prenom;
 		this.ville = ville;
 		this.age = age;
-
-		Client.nombreInstances++;
-
 	}
 
 	public int getId() {

@@ -20,7 +20,7 @@ public class CarteBleue {
 
 		this.setNumero(numero);
 		this.setIdCompte(id_compte);
-		this.setIdCompte(id_compte);
+		this.setAExp(a_exp);
 	}
 
 	public int getId() {

@@ -6,5 +6,6 @@
 <workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1701609873913_5" label="basics" name="basics"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1615230806709_2" label="Window Working Set" name="Aggregate for window 1615230806709"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1686344948501_3" label="Window Working Set" name="Aggregate for window 1686344948501"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1704374871327_6" label="Window Working Set" name="Aggregate for window 1704374871327"/>
 <mruList name="basics"/>
 </workingSetManager>
