@@ -86,7 +86,7 @@ public class Exo {
 			addAccount();
 			break;
 		case 8: // Ajouter une carte de crédit
-			adDcreditCard();
+			addcreditCard();
 			break;
 		case 9: // Remove a client
 			removeClient();
@@ -234,7 +234,7 @@ public class Exo {
 		compte_client_id.add(idClient);
 	}
 
-	public static void adDcreditCard() {
+	public static void addcreditCard() {
 		// Then : create a new card
 
 		getClientList();

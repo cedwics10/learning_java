@@ -144,14 +144,14 @@ public class Main {
 		System.out.println("Âge du client ? (0 pour annuler la création)");
 		int age = clavier.nextInt();
 
-		PreparedStatement statement = connexionBanque.prepareStatement("INSERT INTO client(prenom, age, ville) VALUES(?,?,?);");
+		PreparedStatement statement = connexionBanque
+				.prepareStatement("INSERT INTO client(prenom, age, ville) VALUES(?,?,?);");
 		statement.setString(1, prenom);
 		statement.setInt(2, age);
 		statement.setString(3, ville);
 		statement.executeUpdate();
 
 		System.out.println("Enregistrement réussi");
-
 	}
 
 	public static void addAccount() {
@@ -162,7 +162,29 @@ public class Main {
 
 	}
 
-	public static void removeClient() {
+	public static void removeClient() throws SQLException {
+		System.out.println("Indiquer le numéro du client à supprimer :");
+		int numero = clavier.nextInt();
+
+		PreparedStatement statementClient = connexionBanque
+				.prepareStatement("SELECT id, prenom, age, ville FROM client WHERE id = ?");
+		statementClient.setInt(1, numero);
+		ResultSet resultQueryClient = statementClient.executeQuery();
+
+		if (!resultQueryClient.next()) {
+			System.out.println("Le client n'existe pas.");
+			return;
+		}
+
+		PreparedStatement statementCarte = connexionBanque.prepareStatement(
+				"DELETE FROM carte WHERE id " + "IN(SELECT id_carte FROM compte WHERE id_client = ?)");
+		statementClient.setInt(1, numero);
+		ResultSet resultQueryCarte = statementCarte.executeUpdate();
+
+		statementClient = connexionBanque.prepareStatement(
+				"DELETE FROM carte" + "WHERE id IN(" + "SELECT id_client FROM compte WHERE id_client = ?)");
+		statementClient.setInt(1, numero);
+		resultQueryClient = statementClient.executeQuery();
 
 	}
 
