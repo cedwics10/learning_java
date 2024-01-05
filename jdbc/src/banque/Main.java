@@ -1,6 +1,7 @@
 package banque;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -132,7 +133,24 @@ public class Main {
 
 	}
 
-	public static void addClient() {
+	public static void addClient() throws SQLException {
+		System.out.println("Prénom du client ? ");
+		clavier.nextLine();
+		String prenom = clavier.nextLine();
+
+		System.out.println("Ville du client ? ");
+		String ville = clavier.nextLine();
+
+		System.out.println("Âge du client ? (0 pour annuler la création)");
+		int age = clavier.nextInt();
+
+		PreparedStatement statement = connexionBanque.prepareStatement("INSERT INTO client(prenom, age, ville) VALUES(?,?,?);");
+		statement.setString(1, prenom);
+		statement.setInt(2, age);
+		statement.setString(3, ville);
+		statement.executeUpdate();
+
+		System.out.println("Enregistrement réussi");
 
 	}
 

@@ -14,38 +14,30 @@ public class Main {
 		String utilisateur = "root";
 		String motDePasse = "";
 		Connection connexion = null;
-		Scanner clavier =  new Scanner(System.in);
-		
-		 try {
+		Scanner clavier = new Scanner(System.in);
 
-	            Class.forName("com.mysql.jdbc.Driver").newInstance();;
-	            connexion =DriverManager.getConnection(url,utilisateur,motDePasse);
-	            
-	            
-	            
-	            
-	            System.out.println("Donnez votre nom d'utilisateur : ");
-	            String nu=clavier.nextLine();
-	            System.out.println("Donnez votre mot de passe : ");
-	            String mdp=clavier.nextLine();
-	            
-	            PreparedStatement preparedStatement  = connexion.prepareStatement("INSERT INTO users (username,password) VALUES(?,?)");
-	            
-	            preparedStatement.setString(1,nu);
-	            preparedStatement.setString(2,mdp);
-	            
-	            preparedStatement.executeUpdate();
-	            
-	           
-	           
-	            
-	        } catch (Exception ex) {
-	        	ex.printStackTrace();
-	        }
-		 
-		 
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			;
+			connexion = DriverManager.getConnection(url, utilisateur, motDePasse);
+
+			System.out.println("Donnez votre nom d'utilisateur : ");
+			String nu = clavier.nextLine();
+			System.out.println("Donnez votre mot de passe : ");
+			String mdp = clavier.nextLine();
+
+			PreparedStatement preparedStatement = connexion
+					.prepareStatement("INSERT INTO users (username,password) VALUES(?,?)");
+
+			preparedStatement.setString(1, nu);
+			preparedStatement.setString(2, mdp);
+
+			preparedStatement.executeUpdate();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 	}
-
-
 
 }
