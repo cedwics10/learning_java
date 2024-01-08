@@ -59,11 +59,7 @@ public class Main {
 
 		switch (userChoice) {
 		case 1: // Liste des clients
-			try {
-				getClientList();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			getClientList();
 			break;
 		case 2: // Liste des comptes
 			getAccountList();
@@ -114,22 +110,146 @@ public class Main {
 			String prenom = resultat.getString("prenom");
 			String ville = resultat.getString("ville");
 			System.out.println("Client #" + id + " : " + prenom + " (Âge : " + age + "), ville : " + ville);
+			getAccountList(id);
 		}
+	}s
+
+	public static void getAccountList() throws SQLException {
+		Statement statementompte = connexionBanque.createStatement();
+		ResultSet resultatComptes = statementompte.executeQuery("SELECT * FROM compte");
+
+		boolean noAccountForClient = !resultatComptes.next();
+		if (noAccountForClient) {
+			System.out.println("Aucun compt n'existe dans la banque.");
+			return;
+		}
+
+		do {
+			int numeroCompte = resultatComptes.getInt("id");
+			System.out.println("--- Compte numéro : " + resultatComptes.getInt("id"));
+			System.out.println("    *  RIB : " + resultatComptes.getString("rib"));
+			System.out.println("    *  Solde : " + resultatComptes.getString("solde"));
+			displayCreditCardList(numeroCompte);
+		} while (resultatComptes.next());
+
 	}
 
-	public static void getAccountList() {
+	public static void getAccountList(int numeroClient) throws SQLException {
+		PreparedStatement statementompte = connexionBanque.prepareStatement("SELECT * FROM compte WHERE id_client = ?");
+		statementompte.setInt(1, numeroClient);
+		ResultSet resultatComptes = statementompte.executeQuery();
+
+		boolean noAccountForClient = !resultatComptes.next();
+		if (noAccountForClient) {
+			System.out.println("Le client n'a pas de compte.");
+			return;
+		}
+
+		do {
+			int numeroCompte = resultatComptes.getInt("id");
+			System.out.println("--- Compte numéro : " + numeroCompte);
+			System.out.println("    *  RIB : " + resultatComptes.getString("rib"));
+			System.out.println("    *  Solde : " + resultatComptes.getString("solde"));
+			displayCreditCardList(numeroCompte);
+		} while (resultatComptes.next());
 
 	}
 
-	public static void displayCreditCardList() {
+	public static void displayCreditCardList() throws SQLException {
+		Statement statementompte = connexionBanque.createStatement();
+		ResultSet resultatComptes = statementompte.executeQuery("SELECT * FROM carte");
+
+		boolean noAccountretrieved = !resultatComptes.next();
+		if (noAccountretrieved) {
+			System.out.println("Aucun compt n'existe dans la banque.");
+			return;
+		}
+
+		do {
+			System.out.println("--- Carte numéro : " + resultatComptes.getInt("id"));
+			System.out.println("      *  Numéro de carte : " + resultatComptes.getString("numero"));
+		} while (resultatComptes.next());
+	}
+
+	public static void displayCreditCardList(int numeroCompte) throws SQLException {
+		PreparedStatement statementompte = connexionBanque.prepareStatement("SELECT * FROM carte WHERE id_compte = ?");
+		statementompte.setInt(1, numeroCompte);
+		ResultSet resultatComptes = statementompte.executeQuery();
+
+		boolean noAccountForClient = !resultatComptes.next();
+		if (noAccountForClient) {
+			System.out.println("--- Aucun compt n'existe pour le compte " + numeroCompte + ".");
+			return;
+		}
+
+		do {
+			System.out.println("      ** Carte numéro : " + resultatComptes.getInt("id"));
+			System.out.println("        --  Numéro de carte : " + resultatComptes.getString("numero"));
+		} while (resultatComptes.next());
+	}
+
+	public static void makeWithdraw() throws SQLException {
+		System.out.println("Identifiant du compte débiteur :");
+		clavier.nextLine();
+		int numeroCompte1 = clavier.nextInt();
+
+		System.out.println("Identifiant du compte créditeur :");
+		int numeroCompte2 = clavier.nextInt();
+
+		System.out.println("Montant à trasnférer");
+		int montant = clavier.nextInt();
+
+		PreparedStatement withdrawQuery = connexionBanque
+				.prepareStatement("UPDATE compte SET solde = solde - ?" + " WHERE id = ? AND (solde - ?) >= 0");
+		withdrawQuery.setInt(1, montant);
+		withdrawQuery.setInt(2, numeroCompte1);
+		withdrawQuery.setInt(3, montant);
+
+		int affectedRows = withdrawQuery.executeUpdate();
+		boolean noEnoughMoney = (affectedRows == 0);
+		if (noEnoughMoney) {
+			System.out.println(
+					"Le virement ne peut pas être effectué\n" + "car 'utilisatuer n'a pas les fonds suffisants");
+			return;
+		}
+
+		PreparedStatement depositQuery = connexionBanque
+				.prepareStatement("UPDATE compte SET solde = solde + ?" + " WHERE id = ?");
+		depositQuery.setInt(1, montant);
+		depositQuery.setInt(2, numeroCompte2);
+
+		depositQuery.executeUpdate();
+
+		System.out.println("Le virement a bien été mis en place.");
 
 	}
 
-	public static void makeWithdraw() {
+	public static void researchClient() throws SQLException {
+		System.out.println("Terme de recherche du client : ");
+		clavier.nextLine();
+		String expression = clavier.nextLine();
 
-	}
+		PreparedStatement statement = connexionBanque
+				.prepareStatement("SELECT  * FROM client WHERE prenom LIKE ? OR ville LIKE ?");
+		statement.setString(1, "%" + expression + "%");
+		statement.setString(2, "%" + expression + "%");
 
-	public static void researchClient() {
+		ResultSet resultatsRecherche = statement.executeQuery();
+
+		boolean noResultFound = !resultatsRecherche.next();
+		if (noResultFound) {
+			System.out.println("Aucun résultat trouvé.");
+			return;
+		}
+
+		System.out.println("Ensemble des résultats.");
+		System.out.println("----------------------");
+
+		do {
+			System.out.println("Le client : " + resultatsRecherche.getString("prenom") + " ("
+					+ resultatsRecherche.getString("ville") + ")");
+			System.out.println("Il a : " + resultatsRecherche.getString("age") + " ans.\n");
+		} while (resultatsRecherche.next());
 
 	}
 
@@ -163,36 +283,67 @@ public class Main {
 	}
 
 	public static void removeClient() throws SQLException {
+		Main.getClientList();
 		System.out.println("Indiquer le numéro du client à supprimer :");
-		int numero = clavier.nextInt();
+		int numeroClient = clavier.nextInt();
 
-		PreparedStatement statementClient = connexionBanque
+		PreparedStatement statementCompte = connexionBanque
 				.prepareStatement("SELECT id, prenom, age, ville FROM client WHERE id = ?");
-		statementClient.setInt(1, numero);
-		ResultSet resultQueryClient = statementClient.executeQuery();
+		statementCompte.setInt(1, numeroClient);
+		ResultSet resultQueryClient = statementCompte.executeQuery();
 
 		if (!resultQueryClient.next()) {
 			System.out.println("Le client n'existe pas.");
 			return;
 		}
 
-		PreparedStatement statementCarte = connexionBanque.prepareStatement(
-				"DELETE FROM carte WHERE id " + "IN(SELECT id_carte FROM compte WHERE id_client = ?)");
-		statementClient.setInt(1, numero);
-		ResultSet resultQueryCarte = statementCarte.executeUpdate();
+		PreparedStatement statementCarte = connexionBanque
+				.prepareStatement("DELETE FROM carte WHERE id_compte IN(SELECT id FROM compte WHERE id_client = ?)");
+		statementCarte.setInt(1, numeroClient);
+		statementCarte.executeUpdate();
 
-		statementClient = connexionBanque.prepareStatement(
-				"DELETE FROM carte" + "WHERE id IN(" + "SELECT id_client FROM compte WHERE id_client = ?)");
-		statementClient.setInt(1, numero);
-		resultQueryClient = statementClient.executeQuery();
+		statementCompte = connexionBanque.prepareStatement("DELETE FROM compte WHERE id_client = ?");
+		statementCompte.setInt(1, numeroClient);
+		statementCompte.executeUpdate();
 
+		PreparedStatement statementClient = connexionBanque.prepareStatement("DELETE FROM client WHERE id = ?");
+		statementClient.setInt(1, numeroClient);
+		statementClient.executeUpdate();
+		System.out.println("");
+		System.out.println("Client " + numeroClient + " bien supprimé.");
 	}
 
-	public static void removeAccount() {
+	public static void removeAccount() throws SQLException {
+		System.out.println("Numéro du client :");
+		int numeroClinet = clavier.nextInt();
 
+		System.out.println("Quel est le montant de départ :");
+		int montantDepart = clavier.nextInt();
+
+		PreparedStatement createAccount = connexionBanque
+				.prepareStatement("INSERT INTO compte(rib, solde, id_client) VALUES(?,?,?)");
+		createAccount.setString(1, "3154321");
+		createAccount.setInt(2, montantDepart);
+		createAccount.setInt(3, numeroClinet);
+
+		createAccount.executeUpdate();
 	}
 
-	public static void removeCreditCard() {
+	public static void removeCreditCard() throws SQLException {
+
+		displayCreditCardList();
+
+		System.out.println("Quel est le numéro de la carte :");
+		int numeroCarte = clavier.nextInt();
+
+		PreparedStatement removeCard = connexionBanque.prepareStatement("DELETE FROM carte WHERE id = ?");
+		removeCard.setInt(1, numeroCarte);
+		int affectedRows = removeCard.executeUpdate();
+
+		String text = (affectedRows == 1) ? "Carte supprimée." : "Aucune carte à supprimer.";
+
+		System.out.println(text);
+
 	}
 
 	public static void quitApp() {
